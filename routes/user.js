@@ -9,10 +9,10 @@ const {
     usersPatch
 } = require('../controllers/user');
 
-router.get('', usersGet);          
+router.get('/', usersGet);          
 router.put('/:id', usersPut);         
-router.post('', usersPost);   
-router.delete('', usersDelete);          
-router.patch('', usersPatch);          
+router.post('/', usersPost);   
+router.delete('/', usersDelete);          
+router.patch('/', usersPatch);          
 
 module.exports = router; 

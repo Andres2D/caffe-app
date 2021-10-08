@@ -33,16 +33,22 @@ const usersPost = async(req, res = response) => {
     const { name, email, password, role } = req.body;
     const user = new User({ name, email, password, role });
 
-    // Verify if the email exist
-
-    // Has password
-    const salt = bcryptjs.genSaltSync();
-    user.password = bcryptjs.hashSync(password, salt);
-
-    // Save on DB
-
-
     try {
+        // Verify if the email exist
+        const emailExist = await User.findOne({ email });
+
+        if(emailExist) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'The email is currently used by another user'
+            });
+        }
+    
+        // Has password
+        const salt = bcryptjs.genSaltSync();
+        user.password = bcryptjs.hashSync(password, salt);
+    
+        // Save on DB
         await user.save();
         res.status(201).json({
             ok: true,

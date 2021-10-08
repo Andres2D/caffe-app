@@ -51,8 +51,6 @@ const usersPost = async(req, res = response) => {
         // Save on DB
         await user.save();
         res.status(201).json({
-            ok: true,
-            msg: 'POST - api',
             user
         });
     }catch(err) {

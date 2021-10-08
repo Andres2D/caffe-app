@@ -4,7 +4,8 @@ const router = Router();
 const { validateFields } = require('../middlewares/validate-fields');
 const {
     isValidRole,
-    validEmail
+    validEmail,
+    validUserId
 } = require('../helpers/db-validators');
 
 const { 
@@ -16,7 +17,12 @@ const {
 } = require('../controllers/user');
 
 router.get('/', usersGet);          
-router.put('/:id', usersPut);         
+router.put('/:id', [
+    check('id', 'This is not a valid ID').isMongoId(),
+    check('id').custom(validUserId),
+    check('role').custom( isValidRole ),
+    validateFields
+], usersPut);         
 router.post('/', [
     check('name', 'The name is required').notEmpty(),
     check('password', 'The password require more than 6 letters').isLength({min: 6}),

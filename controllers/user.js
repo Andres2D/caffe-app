@@ -17,9 +17,21 @@ const usersGet = (req = request, res = response) => {
     });
 }
 
-const usersPut = (req, res = response) => {
+const usersPut = async(req, res = response) => {
 
     const id = req.params.id;
+    const { _id, password, google, email, ...user } = req.body;
+
+    // TODO: validate agains db
+
+    if(password) {
+        // Has password
+        const salt = bcryptjs.genSaltSync();
+        user.password = bcryptjs.hashSync(password, salt);
+    }
+
+    const userBD = await User.findByIdAndUpdate(id, user);
+
 
     res.json({
         ok: true,

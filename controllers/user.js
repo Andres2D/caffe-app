@@ -66,10 +66,19 @@ const usersPost = async(req, res = response) => {
     }
 }
 
-const usersDelete = (req, res = response) => {
+const usersDelete = async(req, res = response) => {
+
+    const { id } = req.params;
+
+    // Deleting the documento from db
+    // const user = await User.findByIdAndDelete(id);
+
+    // Logig deleting
+    const user = await User.findByIdAndUpdate(id, { status: false });
+
     res.json({
         ok: true,
-        msg: 'DELETE - api'
+        user
     });
 }
 

@@ -32,7 +32,11 @@ router.post('/', [
     check('role').custom( isValidRole ),
     validateFields
 ], usersPost);   
-router.delete('/', usersDelete);          
+router.delete('/:id', [
+    check('id', 'This is not a valid ID').isMongoId(),
+    check('id').custom(validUserId),
+    validateFields
+], usersDelete);          
 router.patch('/', usersPatch);          
 
 module.exports = router; 

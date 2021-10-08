@@ -1,13 +1,13 @@
-# NODE REST - Template
-Baseic node template to wotk with REST API
+# NODE REST - Caffe - MongoDB :lock:
+REST API to manage a caffe
 
-## Dependencies
+## Dependencies :rotating_light:
 Run 
 ```
 $ npm install
 ```
 
-## Run Server
+## Run Server :arrow_up:
 Run 
 ```
 $ nodemon app

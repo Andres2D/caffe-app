@@ -69,6 +69,7 @@ const usersPost = async(req, res = response) => {
 const usersDelete = async(req, res = response) => {
 
     const { id } = req.params;
+    const authUser = req.user;
 
     // Deleting the documento from db
     // const user = await User.findByIdAndDelete(id);

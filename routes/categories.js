@@ -1,6 +1,8 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
+const { createCategory, getCategories } = require('../controllers/categories');
 const { validateFields } = require('../middlewares/validate-fields');
+const { validateJWT } = require('../middlewares/validate-jwt');
 
 const router = Router();
 
@@ -9,12 +11,7 @@ const router = Router();
  */
 
 // Get all the categories - public
-router.get('/', (req, res) =>{
-    res.json({
-        ok: true,
-        msg: 'GET'
-    })
-});
+router.get('/', getCategories);
 
 // Get category by id - public
 router.get('/:id', (req, res) =>{
@@ -25,12 +22,11 @@ router.get('/:id', (req, res) =>{
 });
 
 // Create category - with a valid token
-router.post('/', (req, res) =>{
-    res.json({
-        ok: true,
-        msg: 'POST'
-    })
-});
+router.post('/', [
+    validateJWT,
+    check('name', 'The name is required').notEmpty(),
+    validateFields
+], createCategory);
 
 // Update category by id - with a valid token
 router.put('/:id', (req, res) =>{

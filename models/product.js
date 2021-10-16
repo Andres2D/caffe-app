@@ -31,6 +31,9 @@ const ProductSchema = Schema({
     aviable: {
         type: Boolean,
         default: true
+    },
+    img: {
+        type: String
     }
 });
 

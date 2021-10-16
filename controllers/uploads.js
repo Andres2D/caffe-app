@@ -119,7 +119,10 @@ const updateImageCloudinary = async(req, res = response) => {
 
         // Clean prev files
         if(model.img) {
-           
+           const nameArr = model.img.split('/');
+           const name = nameArr[nameArr.length - 1];
+           const [public_id] = name.split('.'); 
+           cloudinary.uploader.destroy(public_id);
         }
 
         const {tempFilePath} = req.files.file;

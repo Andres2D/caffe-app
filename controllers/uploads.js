@@ -1,4 +1,7 @@
 const { response } = require("express");
+const path = require('path');
+const fs = require('fs');
+
 const {uploadFile} = require('../helpers');
 const { User, Product } = require('../models');
 
@@ -52,7 +55,15 @@ const updateImage = async(req, res = response) => {
                 })
         }
 
-        const name = await uploadFile( undefined, collection);
+        // Clean prev files
+        if(model.img) {
+            const pathImg = path.join(__dirname, `../uploads/${collection}`, model.img);
+            if(fs.existsSync(pathImg)) {
+                fs.unlinkSync(pathImg);
+            }
+        }
+
+        const name = await uploadFile(req.files, undefined, collection);
         model.img = name;
 
         await model.save()
